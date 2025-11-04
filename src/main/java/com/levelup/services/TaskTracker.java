@@ -3,6 +3,7 @@ package com.levelup.services;
 import com.levelup.model.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class TaskTracker {
     private Leaderboard lb;
@@ -53,26 +54,40 @@ public class TaskTracker {
     }
 
     public List<Task> randomTasks() {
-        List<Task> randomTasks = new ArrayList<>();
-        while (randomTasks.size() < 3){
-            Task randomTask = taskList.get((int) (Math.random() * taskList.size()));
-            if (!randomTasks.contains(randomTask))
-                randomTasks.add(randomTask);
-        }
-        return randomTasks;
+    List<Task> randomTasks = new ArrayList<>();
+
+    if (taskList == null || taskList.isEmpty()) {
+        System.err.println("Warning: No tasks available to assign");
     }
+    if (Objects.requireNonNull(taskList).size() <= 3) {
+        return new ArrayList<>(taskList);
+    }
+    while (randomTasks.size() < 3) {
+        Task randomTask = taskList.get((int) (Math.random() * taskList.size()));
+        if (!randomTasks.contains(randomTask)) {
+            randomTasks.add(randomTask);
+        }
+    }
+    return randomTasks;
+}
 
 
     public void addUser(String username) {
         if (userList.stream().anyMatch(u -> u.getName().equals(username))) {
             System.out.println("User already exists");
-        }
-        else {
-            User user = new User(username, 0, randomTasks(), new ArrayList<>(), 0);
+        } else {
+            List<Task> initialTasks = randomTasks();
+            if (initialTasks.isEmpty()) {
+                System.err.println("Warning: User created without initial tasks (no tasks available)");
+            }
+            User user = new User(username, 0, initialTasks, new ArrayList<>(), 0);
             userList.add(user);
             lb.setUserList(userList);
-            fm.saveLeaderboard(lb);
-            System.out.println("User added");
+            if (fm.saveLeaderboard(lb)) {
+                System.out.println("User added");
+            } else {
+                System.out.println("User added but could not save to file");
+            }
         }
     }
 
@@ -88,8 +103,9 @@ public class TaskTracker {
         checkAchievements(user, achievements);
         lb.setUserList(userList);
         lb.sortLeaderboard();
-        fm.saveLeaderboard(lb);
-
+        if (!fm.saveLeaderboard(lb)) {
+            System.err.println("Warning: Failed to save progress to file");
+        }
     }
 
     public User getUser(String username) {

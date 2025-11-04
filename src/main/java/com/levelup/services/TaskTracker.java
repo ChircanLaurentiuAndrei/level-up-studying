@@ -58,8 +58,9 @@ public class TaskTracker {
 
     if (taskList == null || taskList.isEmpty()) {
         System.err.println("Warning: No tasks available to assign");
+        return randomTasks;
     }
-    if (Objects.requireNonNull(taskList).size() <= 3) {
+    if (taskList.size() <= 3) {
         return new ArrayList<>(taskList);
     }
     while (randomTasks.size() < 3) {
@@ -92,6 +93,9 @@ public class TaskTracker {
     }
 
     public void checkAchievements(User user, List<Achievement> achievements) {
+        if (user == null || achievements == null) {
+            return;
+        }
         for (Achievement achievement : achievements) {
             if (achievement.getNumberOfTasksRequired() <= user.getNumberOfTasks())
                 user.rewardAchievement(achievement);

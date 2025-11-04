@@ -1,0 +1,64 @@
+{
+  "userList": [
+    {
+      "name": "Lau",
+      "xp": 0,
+      "taskList": [
+        {
+          "name": "Finish the Individual Project",
+          "xp": 60
+        },
+        {
+          "name": "Rest your eyes for 10 minutes",
+          "xp": 100
+        },
+        {
+          "name": "Exercise for 20 minutes",
+          "xp": 100
+        }
+      ],
+      "achievementList": [],
+      "numberOfTasksCompleted": 0
+    },
+    {
+      "name": "Teo",
+      "xp": 0,
+      "taskList": [
+        {
+          "name": "Learn Memory Management for OS",
+          "xp": 70
+        },
+        {
+          "name": "Understand Permutations and Combinations for GTC",
+          "xp": 70
+        },
+        {
+          "name": "Practice React Native",
+          "xp": 50
+        }
+      ],
+      "achievementList": [],
+      "numberOfTasksCompleted": 0
+    },
+    {
+      "name": "Alex",
+      "xp": 0,
+      "taskList": [
+        {
+          "name": "Practice SQL for Database Lecture",
+          "xp": 60
+        },
+        {
+          "name": "Review Database Lecture",
+          "xp": 40
+        },
+        {
+          "name": "Exercise for 20 minutes",
+          "xp": 100
+        }
+      ],
+      "achievementList": [],
+      "numberOfTasksCompleted": 0
+    }
+  ]
+}

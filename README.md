@@ -27,3 +27,5 @@ Every completed task earns XP, achievements, and leaderboard ranks — turning d
 | IDE (recommended) | IntelliJ IDEA |
 
 ---
+
+This project is open-source and available under the [MIT License](LICENSE)

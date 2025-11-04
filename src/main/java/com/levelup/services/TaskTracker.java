@@ -1,11 +1,11 @@
 package com.levelup.services;
 
+import com.levelup.interfaces.Trackable;
 import com.levelup.model.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class TaskTracker {
+public class TaskTracker implements Trackable {
     private Leaderboard lb;
     private List<User> userList;
     private List<Task> taskList;
@@ -20,6 +20,8 @@ public class TaskTracker {
         fm = new FileManager();
     }
 
+
+    @Override
 
     public void initialize() {
         lb = fm.loadLeaderboard();

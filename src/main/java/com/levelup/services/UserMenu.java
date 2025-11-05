@@ -56,7 +56,7 @@ public class UserMenu {
         }
     }
 
-    public void clearScreen() {                  //this won't work in an IDE, only in the terminal
+    public void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
@@ -97,15 +97,24 @@ public class UserMenu {
     }
 
     public void completeTask() {
-        System.out.println("Enter the index of the task you would like to complete");
-        int index = scanner.nextInt();
-        scanner.nextLine();
-        if (index >= 1 && index <= taskTracker.getUser(username).getTaskList().size()) {
-            Task task = taskTracker.getUser(username).getTaskList().get(index - 1);
-            taskTracker.rewardUser(taskTracker.getUser(username), task);
+        if (taskTracker.getUser(username).getTaskList().isEmpty()) {
+            System.out.println("No tasks available to complete.");
+            return;
         }
-        else {
-            System.out.println("Invalid index. Please enter a valid number.");
+        System.out.println("Enter the index of the task you would like to complete");
+        try {
+            int index = scanner.nextInt();
+            scanner.nextLine();
+            if (index >= 1 && index <= taskTracker.getUser(username).getTaskList().size()) {
+                Task task = taskTracker.getUser(username).getTaskList().get(index - 1);
+                taskTracker.rewardUser(taskTracker.getUser(username), task);
+                System.out.println("Task completed!");
+            } else {
+                System.out.println("Invalid index. Please enter a valid number.");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a number.");
+            scanner.nextLine();
         }
 
     }

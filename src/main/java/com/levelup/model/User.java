@@ -3,17 +3,18 @@ package com.levelup.model;
 import com.levelup.interfaces.Rewardable;
 
 import java.util.List;
+import java.util.Set;
 
 public class User implements Rewardable {
     private String name;
     private int xp;
     private List<Task> taskList;
-    private List<Achievement> achievementList;
+    private Set<Achievement> achievementList;
     int numberOfTasksCompleted;
 
 
 
-    public User(String name, int xp, List<Task> taskList, List<Achievement> achievementList, int numberOfTasksCompleted) {
+    public User(String name, int xp, List<Task> taskList, Set<Achievement> achievementList, int numberOfTasksCompleted) {
         this.name = name;
         this.xp = xp;
         this.taskList = taskList;
@@ -42,7 +43,7 @@ public class User implements Rewardable {
         taskList.add(task);
     }
 
-    public List<Achievement> getAchievementList() {
+    public Set<Achievement> getAchievementList() {
         return achievementList;
     }
 
@@ -58,8 +59,7 @@ public class User implements Rewardable {
 
     @Override
     public void rewardAchievement(Achievement achievement) {
-        if (!achievementList.contains(achievement))
-            achievementList.add(achievement);
+        achievementList.add(achievement);
     }
 
     @Override

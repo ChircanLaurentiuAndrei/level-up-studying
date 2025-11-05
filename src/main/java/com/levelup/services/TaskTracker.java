@@ -2,12 +2,18 @@ package com.levelup.services;
 
 import com.levelup.interfaces.Trackable;
 import com.levelup.model.*;
+import com.levelup.exceptions.DuplicateUserException;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 public class TaskTracker implements Trackable {
     private Leaderboard lb;
     private List<User> userList;
+    private Map<String, User> userMap;
     private List<Task> taskList;
     private List<Achievement> achievements;
     private FileManager fm;
@@ -15,6 +21,7 @@ public class TaskTracker implements Trackable {
     public TaskTracker() {
         lb = new Leaderboard();
         userList = new ArrayList<>();
+        userMap = new HashMap<>();
         taskList = new ArrayList<>();
         achievements = new ArrayList<>();
         fm = new FileManager();
@@ -37,6 +44,10 @@ public class TaskTracker implements Trackable {
             userList = new ArrayList<>();
             lb.setUserList(userList);
         }
+        userMap = new HashMap<>();
+        for (User u : userList) {
+            userMap.put(u.getName(), u);
+        }
 
         taskList = fm.loadTasks();
 
@@ -56,41 +67,53 @@ public class TaskTracker implements Trackable {
     }
 
     public List<Task> randomTasks() {
-    List<Task> randomTasks = new ArrayList<>();
+        List<Task> randomTasks = new ArrayList<>();
 
-    if (taskList == null || taskList.isEmpty()) {
-        System.err.println("Warning: No tasks available to assign");
+        if (taskList == null || taskList.isEmpty()) {
+            System.err.println("Warning: No tasks available to assign");
+            return randomTasks;
+        }
+        if (taskList.size() <= 3) {
+            return new ArrayList<>(taskList);
+        }
+        while (randomTasks.size() < 3) {
+            Task randomTask = taskList.get((int) (Math.random() * taskList.size()));
+            if (!randomTasks.contains(randomTask)) {
+                randomTasks.add(randomTask);
+            }
+        }
         return randomTasks;
     }
-    if (taskList.size() <= 3) {
-        return new ArrayList<>(taskList);
-    }
-    while (randomTasks.size() < 3) {
-        Task randomTask = taskList.get((int) (Math.random() * taskList.size()));
-        if (!randomTasks.contains(randomTask)) {
-            randomTasks.add(randomTask);
-        }
-    }
-    return randomTasks;
-}
 
+    private boolean isValidUsername(String username) {
+        return username != null && username.matches("[A-Za-z0-9_]{3,20}");
+    }
 
     public void addUser(String username) {
-        if (userList.stream().anyMatch(u -> u.getName().equals(username))) {
-            System.out.println("User already exists");
+        if (!isValidUsername(username)) {
+            System.out.println("Invalid username. Use 3-20 alphanumeric characters or underscore.");
+            return;
+        }
+        if (userMap.containsKey(username)) {
+            try {
+                throw new DuplicateUserException("User '" + username + "' already exists");
+            } catch (DuplicateUserException e) {
+                System.out.println(e.getMessage());
+                return;
+            }
+        }
+        List<Task> initialTasks = randomTasks();
+        if (initialTasks.isEmpty()) {
+            System.err.println("Warning: User created without initial tasks (no tasks available)");
+        }
+        User user = new User(username, 0, initialTasks, new HashSet<>(), 0);
+        userList.add(user);
+        userMap.put(username, user);
+        lb.setUserList(userList);
+        if (fm.saveLeaderboard(lb)) {
+            System.out.println("User added");
         } else {
-            List<Task> initialTasks = randomTasks();
-            if (initialTasks.isEmpty()) {
-                System.err.println("Warning: User created without initial tasks (no tasks available)");
-            }
-            User user = new User(username, 0, initialTasks, new ArrayList<>(), 0);
-            userList.add(user);
-            lb.setUserList(userList);
-            if (fm.saveLeaderboard(lb)) {
-                System.out.println("User added");
-            } else {
-                System.out.println("User added but could not save to file");
-            }
+            System.out.println("User added but could not save to file");
         }
     }
 
@@ -115,7 +138,7 @@ public class TaskTracker implements Trackable {
     }
 
     public User getUser(String username) {
-        return userList.stream().filter(u -> u.getName().equals(username)).findFirst().orElse(null);
+        return userMap.get(username);
     }
 
     public Leaderboard getLeaderboard() {

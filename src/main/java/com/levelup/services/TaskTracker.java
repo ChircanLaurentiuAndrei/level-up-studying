@@ -130,6 +130,9 @@ public class TaskTracker implements Trackable {
     public void rewardUser(User user, Task task) {
         user.rewardUser(task);
         checkAchievements(user, achievements);
+        if (user.getTaskList().isEmpty()) {
+            user.setTaskList(randomTasks());
+        }
         lb.setUserList(userList);
         lb.sortLeaderboard();
         if (!fm.saveLeaderboard(lb)) {

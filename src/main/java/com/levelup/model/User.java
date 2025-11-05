@@ -21,7 +21,9 @@ public class User implements Rewardable {
         this.achievementList = achievementList;
         this.numberOfTasksCompleted = numberOfTasksCompleted;
     }
-
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
+    }
 
     public String getName() {
         return name;

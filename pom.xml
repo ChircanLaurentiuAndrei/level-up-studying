@@ -50,7 +50,6 @@
                     </archive>
                 </configuration>
             </plugin>
-            <!-- Create fat JAR with dependencies included -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>

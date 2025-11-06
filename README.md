@@ -96,6 +96,9 @@ classDiagram
       +getUser(String) User
       +rewardUser(User, Task)
       +getLeaderboard() Leaderboard
+      +randomTasks() List~Task~
+      +checkAchievements(User, List~Achievement~)
+      +toString() String
     }
 
     class FileManager {
@@ -109,35 +112,45 @@ classDiagram
 
     class Leaderboard {
       -List~User~ userList
-      +sortLeaderboard()
+      +setUserList(List~User~)
       +getUserList() List~User~
+      +sortLeaderboard()
     }
 
     class User {
-      +name : String
-      +xp : int
-      +taskList : List~Task~
-      +achievementList : Set~Achievement~
+      -name : String
+      -xp : int
+      -taskList : List~Task~
+      -achievementList : Set~Achievement~
+      -numberOfTasksCompleted : int
       +rewardUser(Task)
       +rewardAchievement(Achievement)
     }
 
     class Task {
-      +name : String
-      +xp : int
+      -name : String
+      -xp : int
     }
 
     class Achievement {
-      +name : String
-      +description : String
-      +numberOfTasksRequired : int
+      -name : String
+      -description : String
+      -numberOfTasksRequired : int
     }
 
     class UserMenu {
       -TaskTracker taskTracker
       -String username
+      -Scanner scanner
       +displayMenu()
+      +getChoice() int
       +runMenuChoice(int)
+      +listTasks()
+      +listLeaderboard()
+      +listAchievements()
+      +completeTask()
+      +clearScreen()
+      +backToMenu()
     }
 
     Trackable <|.. TaskTracker

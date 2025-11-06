@@ -70,100 +70,122 @@ The following class diagram outlines core classes, interfaces and relationships.
 
 ```mermaid
 classDiagram
-    direction LR
+direction BT
+class Achievement {
+  - int numberOfTasksRequired
+  - String description
+  - String name
+  + hashCode() int
+  + toString() String
+  + getName() String
+  + getDescription() String
+  + equals(Object) boolean
+  + getNumberOfTasksRequired() int
+}
+class DuplicateUserException
+class FileManager {
+  - String FILE_NAME_LEADERBOARD
+  - String FILE_NAME_TASK
+  - String FILE_NAME_ACHIEVEMENTS
+  - Gson gson
+  + saveLeaderboard(Leaderboard) boolean
+  + loadAchievement() List~Achievement~
+  + loadTasks() List~Task~
+  + saveTasks(List~Task~) boolean
+  + loadLeaderboard() Leaderboard
+  + saveAchievement(List~Achievement~) boolean
+}
+class Leaderboard {
+  - List~User~ userList
+  + toString() String
+  + getUserList() List~User~
+  + setUserList(List~User~) void
+  + sortLeaderboard() void
+}
+class Main {
+  + main(String[]) void
+}
+class Rewardable {
+<<Interface>>
+  + rewardUser(Task) void
+  + rewardAchievement(Achievement) void
+}
+class Task {
+  - String name
+  - int xp
+  + equals(Object) boolean
+  + getXp() int
+  + getName() String
+  + toString() String
+  + hashCode() int
+}
+class TaskTracker {
+  - List~User~ userList
+  - List~Task~ taskList
+  - FileManager fm
+  - Map~String, User~ userMap
+  - List~Achievement~ achievements
+  - Leaderboard lb
+  + initialize() void
+  - isValidUsername(String) boolean
+  + checkAchievements(User, List~Achievement~) void
+  + randomTasks() List~Task~
+  + toString() String
+  + getUser(String) User
+  + getLeaderboard() Leaderboard
+  + rewardUser(User, Task) void
+  + addUser(String) void
+}
+class Trackable {
+<<Interface>>
+  + initialize() void
+  + toString() String
+}
+class User {
+  - int xp
+  - List~Task~ taskList
+  - Set~Achievement~ achievementList
+  - String name
+  ~ int numberOfTasksCompleted
+  + getNumberOfTasks() int
+  + rewardUser(Task) void
+  + getTaskList() List~Task~
+  + rewardAchievement(Achievement) void
+  + toString() String
+  + getAchievementList() Set~Achievement~
+  + getName() String
+  + addTask(Task) void
+  + setTaskList(List~Task~) void
+  + getXp() int
+}
+class UserMenu {
+  - TaskTracker taskTracker
+  - String username
+  - Scanner scanner
+  + backToMenu() void
+  + completeTask() void
+  + runMenuChoice(int) void
+  + listTasks() void
+  + getChoice() int
+  + displayMenu() void
+  + clearScreen() void
+  + listLeaderboard() void
+  + listAchievements() void
+}
+class UserNotFoundException
 
-    class Trackable {
-      <<interface>>
-      +initialize()
-      +toString() String
-    }
+Leaderboard "1" *--> "userList *" User 
+TaskTracker "1" *--> "achievements *" Achievement 
+TaskTracker "1" *--> "fm 1" FileManager 
+TaskTracker "1" *--> "lb 1" Leaderboard 
+TaskTracker "1" *--> "taskList *" Task 
+TaskTracker  ..>  Trackable 
+TaskTracker "1" *--> "userList *" User 
+User "1" *--> "achievementList *" Achievement 
+User  ..>  Rewardable 
+User "1" *--> "taskList *" Task 
+UserMenu "1" *--> "taskTracker 1" TaskTracker 
 
-    class Rewardable {
-      <<interface>>
-      +rewardUser(Task)
-      +rewardAchievement(Achievement)
-    }
-
-    class TaskTracker {
-      -Leaderboard lb
-      -List~User~ userList
-      -Map~String, User~ userMap
-      -List~Task~ taskList
-      -List~Achievement~ achievements
-      -FileManager fm
-      +initialize()
-      +addUser(String)
-      +getUser(String) User
-      +rewardUser(User, Task)
-      +getLeaderboard() Leaderboard
-      +randomTasks() List~Task~
-      +checkAchievements(User, List~Achievement~)
-      +toString() String
-    }
-
-    class FileManager {
-      +saveLeaderboard(Leaderboard) boolean
-      +loadLeaderboard() Leaderboard
-      +saveTasks(List~Task~) boolean
-      +loadTasks() List~Task~
-      +saveAchievement(List~Achievement~) boolean
-      +loadAchievement() List~Achievement~
-    }
-
-    class Leaderboard {
-      -List~User~ userList
-      +setUserList(List~User~)
-      +getUserList() List~User~
-      +sortLeaderboard()
-    }
-
-    class User {
-      -name : String
-      -xp : int
-      -taskList : List~Task~
-      -achievementList : Set~Achievement~
-      -numberOfTasksCompleted : int
-      +rewardUser(Task)
-      +rewardAchievement(Achievement)
-    }
-
-    class Task {
-      -name : String
-      -xp : int
-    }
-
-    class Achievement {
-      -name : String
-      -description : String
-      -numberOfTasksRequired : int
-    }
-
-    class UserMenu {
-      -TaskTracker taskTracker
-      -String username
-      -Scanner scanner
-      +displayMenu()
-      +getChoice() int
-      +runMenuChoice(int)
-      +listTasks()
-      +listLeaderboard()
-      +listAchievements()
-      +completeTask()
-      +clearScreen()
-      +backToMenu()
-    }
-
-    Trackable <|.. TaskTracker
-    Rewardable <|.. User
-
-    TaskTracker --> Leaderboard
-    TaskTracker --> FileManager
-    TaskTracker --> "*" Task
-    TaskTracker --> "*" Achievement
-
-    Leaderboard --> "*" User
-    User --> "*" Task
-    User --> "*" Achievement
 ```
 
 ---

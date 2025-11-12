@@ -82,7 +82,6 @@ class Achievement {
   + equals(Object) boolean
   + getNumberOfTasksRequired() int
 }
-class DuplicateUserException
 class FileManager {
   - String FILE_NAME_LEADERBOARD
   - String FILE_NAME_TASK
@@ -101,14 +100,6 @@ class Leaderboard {
   + getUserList() List~User~
   + setUserList(List~User~) void
   + sortLeaderboard() void
-}
-class Main {
-  + main(String[]) void
-}
-class Rewardable {
-<<Interface>>
-  + rewardUser(Task) void
-  + rewardAchievement(Achievement) void
 }
 class Task {
   - String name
@@ -136,11 +127,6 @@ class TaskTracker {
   + rewardUser(User, Task) void
   + addUser(String) void
 }
-class Trackable {
-<<Interface>>
-  + initialize() void
-  + toString() String
-}
 class User {
   - int xp
   - List~Task~ taskList
@@ -158,33 +144,15 @@ class User {
   + setTaskList(List~Task~) void
   + getXp() int
 }
-class UserMenu {
-  - TaskTracker taskTracker
-  - String username
-  - Scanner scanner
-  + backToMenu() void
-  + completeTask() void
-  + runMenuChoice(int) void
-  + listTasks() void
-  + getChoice() int
-  + displayMenu() void
-  + clearScreen() void
-  + listLeaderboard() void
-  + listAchievements() void
-}
-class UserNotFoundException
 
 Leaderboard "1" *--> "userList *" User 
 TaskTracker "1" *--> "achievements *" Achievement 
 TaskTracker "1" *--> "fm 1" FileManager 
 TaskTracker "1" *--> "lb 1" Leaderboard 
 TaskTracker "1" *--> "taskList *" Task 
-TaskTracker  ..>  Trackable 
 TaskTracker "1" *--> "userList *" User 
 User "1" *--> "achievementList *" Achievement 
-User  ..>  Rewardable 
 User "1" *--> "taskList *" Task 
-UserMenu "1" *--> "taskTracker 1" TaskTracker 
 
 ```
 

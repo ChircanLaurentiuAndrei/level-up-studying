@@ -122,8 +122,9 @@ public class TaskTracker implements Trackable {
             return;
         }
         for (Achievement achievement : achievements) {
-            if (achievement.getNumberOfTasksRequired() <= user.getNumberOfTasks())
+            if (achievement.getNumberOfTasksRequired() <= user.getNumberOfTasksCompleted() && !user.getAchievementList().contains(achievement)) {
                 user.rewardAchievement(achievement);
+            }
         }
     }
 

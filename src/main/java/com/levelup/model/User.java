@@ -41,6 +41,10 @@ public class User implements Rewardable {
         return taskList.size();
     }
 
+    public int getNumberOfTasksCompleted() {
+        return numberOfTasksCompleted;
+    }
+
     public void addTask(Task task) {
         taskList.add(task);
     }
@@ -54,6 +58,7 @@ public class User implements Rewardable {
         if (taskList.contains(task)) {
             taskList.remove(task);
             xp += task.getXp();
+            numberOfTasksCompleted++;
         }
         else
             System.out.println("You have already completed this task or it does not exist");

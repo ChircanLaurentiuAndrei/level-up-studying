@@ -13,7 +13,7 @@ Every completed task earns XP, achievements, and leaderboard ranks — turning d
 - 🏆 **Achievements** — Unlock milestones for completing tasks  
 - 📈 **Leaderboard** — Compare users by XP in real-time  
 - 💾 **Persistent Data** — All data saved and loaded from a local JSON file  
-- ⚙️ **Configurable** — Use CLI args and/or system properties to choose data files and startup mode  
+- ⚙️ **Configurable** — Use CLI args to choose startup mode  
 - 🧯 **Robust Error Handling** — Handles multiple IO/parse/input exceptions and uses custom domain exceptions  
 
 ---
@@ -38,18 +38,6 @@ Build a runnable JAR (already provided under `target/`), then run with one of th
   ```bash
   java -jar target/LevelUp-standalone.jar -launch Alice
   ```
-
-### Optional configuration (system properties)
-You can override the default JSON file locations using Java system properties:
-```
--Dlevelup.leaderboard=path/to/leaderboard.json 
--Dlevelup.tasks=path/to/task.json 
--Dlevelup.achievements=path/to/achievement.json
-```
-Example:
-```bash
-java -Dlevelup.tasks=data/tasks.json -jar target/LevelUp-standalone.jar -init
-```
 
 ---
 
@@ -193,7 +181,6 @@ User "1" *--> "achievementList *" Achievement
 User  ..>  Rewardable 
 User "1" *--> "taskList *" Task 
 UserMenu "1" *--> "taskTracker 1" TaskTracker 
-
 ```
 
 ---

@@ -167,7 +167,7 @@ UserMenu "1" *--> "taskTracker 1" TaskTracker
 - 4+ classes and 2+ interfaces: `TaskTracker`, `FileManager`, `User`, `Task`, `Achievement`, `Leaderboard` + interfaces `Trackable`, `Rewardable`
 - Uses at least two collections: `List`, `Set`, and `Map` are used
 - Stores/reads data from files: JSON via `FileManager` (Gson)
-- Config/program arguments: CLI modes (`-h`, `-init`, `-add`, `-launch`) and optional `-Dlevelup.*` properties
+- Config/program arguments: CLI modes (`-h`, `-init`, `-add`, `-launch`)
 - Handles 3+ language exceptions: `FileNotFoundException`, `IOException`, `JsonSyntaxException`, `InputMismatchException`
 - 2 custom exceptions: `DuplicateUserException`, `UserNotFoundException`
 - Input validation: username format, menu choice validation, bounds checks on task selection

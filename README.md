@@ -18,29 +18,6 @@ Every completed task earns XP, achievements, and leaderboard ranks — turning d
 
 ---
 
-## ▶️ How to Run
-
-Build a runnable JAR (already provided under `target/`), then run with one of the following modes:
-
-- Help
-  ```bash
-  java -jar target/LevelUp-standalone.jar -h
-  ```
-- Initialize demo data (tasks, achievements, leaderboard)
-  ```bash
-  java -jar target/LevelUp-standalone.jar -init
-  ```
-- Add a user
-  ```bash
-  java -jar target/LevelUp-standalone.jar -add Alice
-  ```
-- Launch the app for a user
-  ```bash
-  java -jar target/LevelUp-standalone.jar -launch Alice
-  ```
-
----
-
 ## 🧱 Technologies Used
 
 | Component | Technology |

@@ -25,7 +25,6 @@ public class Main {
                 System.out.println("<-init> to initialize with an example data set");
                 System.out.println("<-add> <userName> to add a user to the database");
                 System.out.println("<-launch> <userName> to use the application with the user name chosen");
-                System.out.println("Optional system properties to configure file paths: -Dlevelup.leaderboard=path -Dlevelup.tasks=path -Dlevelup.achievements=path");
                 break;
 
             case "-init":

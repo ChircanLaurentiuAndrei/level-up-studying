@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileManager {
-    private static final String FILE_NAME_LEADERBOARD = System.getProperty("levelup.leaderboard", "leaderboard.json");
-    private static final String FILE_NAME_ACHIEVEMENTS = System.getProperty("levelup.achievements", "achievement.json");
-    private static final String FILE_NAME_TASK = System.getProperty("levelup.tasks", "task.json");
+    private static final String FILE_NAME_LEADERBOARD = "leaderboard.json";
+    private static final String FILE_NAME_ACHIEVEMENTS = "achievement.json";
+    private static final String FILE_NAME_TASK ="task.json";
 
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
